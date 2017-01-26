@@ -1,0 +1,109 @@
+<html>
+<body>
+<script language="javascript">
+  var listOfSelects = new Array();
+  function getInitialRooms(){
+    var getRooms = new XMLHttpRequest();
+    var url = "https://fenix-rooms.herokuapp.com/api/spaces";
+    getRooms.open("GET", url, true);
+    getRooms.onreadystatechange = function(){
+      if(this.readyState == 4){
+        if(this.status == 200){
+          var parsedJson = JSON.parse(getRooms.responseText);
+          var div = document.querySelector("#container"),
+            frag = document.createDocumentFragment(),
+            select = document.createElement("select");
+          listOfSelects.push(select);
+          var index = "" + listOfSelects.indexOf(select);
+          select.setAttribute("id",index);
+
+          select.onchange = function(){addSelectLayer(this);}
+          select.options.add( new Option("Select one", " "));
+          for (var i=0; i < parsedJson.length; i++){
+            //console.log("Building: " + parsedJson[i].name);
+            select.options.add( new Option(parsedJson[i].name,parsedJson[i].id));
+          }
+          frag.appendChild(select);
+          div.appendChild(frag);
+        }
+      }
+    }
+    getRooms.send();
+  }
+
+  function addSelectLayer(selectObject){
+    console.log(selectObject.value);
+    var getSpace = new XMLHttpRequest();
+    var space_url = "https://fenix-rooms.herokuapp.com/api/id/" + selectObject.value;
+    getSpace.open("GET", space_url,true);
+    getSpace.onreadystatechange = function(){
+      if(this.readyState == 4){
+        if(this.status == 200){
+          var parsedSpacesJson = JSON.parse(getSpace.responseText);
+
+          var element_aux = document.getElementById("btn");
+          if (element_aux.firstChild){
+            element_aux.removeChild(element_aux.firstChild);
+          }
+          if(parsedSpacesJson.hasOwnProperty('capacity')){
+            var div = document.querySelector("#btn"),
+              frag = document.createDocumentFragment(),
+              button = document.createElement("button");
+            button.setAttribute("type", "button");
+            button.innerHTML = "Create Room";
+            button.onclick = function(){adminPostRoom(this, parsedSpacesJson, selectObject.value);}
+            frag.appendChild(button);
+            div.appendChild(frag);
+          }else{
+            var div = document.querySelector("#container"),
+              frag = document.createDocumentFragment(),
+              select = document.createElement("select");
+
+            if ( listOfSelects.indexOf(selectObject) != listOfSelects.length -1){
+              var element = document.getElementById("container");
+              for( var i = listOfSelects.length-1; i > listOfSelects.indexOf(selectObject); i--){
+                element.removeChild(listOfSelects[i]);
+                listOfSelects.pop();
+              }
+            }
+            listOfSelects.push(select);
+            var index = "" + listOfSelects.indexOf(select);
+            select.setAttribute("id",index);
+
+            select.onchange = function(){addSelectLayer(this);}
+            select.options.add( new Option("Select one", " "));
+            for (var i=0; i < parsedSpacesJson.containedSpaces.length; i++){
+              //console.log("Stuff: " + parsedSpacesJson.containedSpaces[i].name);
+              select.options.add( new Option(parsedSpacesJson.containedSpaces[i].name,parsedSpacesJson.containedSpaces[i].id));
+            }
+            frag.appendChild(select);
+            div.appendChild(frag);
+          }
+        }
+      }
+    }
+    getSpace.send();
+  }
+
+  function adminPostRoom(selectObject,space,identifier){
+    var createRoom = new XMLHttpRequest();
+    var create_url = "https://fenix-rooms.herokuapp.com/api/create_room";
+    createRoom.open("POST", create_url, true);
+		createRoom.setRequestHeader("Content-type", "application/json");
+    createRoom.onreadystatechange = function(){
+      if(this.readyState == 4){
+        if(this.status == 200){
+          alert("Room created sucessfully");
+        }
+      }
+    }
+    createRoom.send(JSON.stringify({"location" : space.name,"capacity" : ""+space.capacity.normal, "fenix_id" : identifier, "user_id" : "0"},null,' '));
+  }
+
+  window.onload = getInitialRooms;
+</script>
+  <h1> Add rooms for students to check in.</h1>
+  <div id="container">Building: </div>
+  <div id="btn"></div>
+</body>
+</html>
