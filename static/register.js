@@ -20,7 +20,7 @@ function registerUsername() {
 						if(this.status == 200 || this.status == 409 || this.status == 422){
 							var parsedJson = JSON.parse(createUser.responseText);
 							var userId = parsedJson["user"]["id"];
-							window.location.href = "checkin.html/?id="+userId;
+							window.location.href = "checkin.html?id="+userId;
 							fadeout(errormessagediv);
 						}else{
 							errormessagediv.innerHTML = "Something went wrong with the server or db. Try again later.";
