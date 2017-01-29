@@ -3,9 +3,6 @@ function registerUsername() {
 			var username        = document.getElementById("usernameinput").value;
 			var errormessagediv = document.getElementById("errormessage");
 
-
-			console.log("test");
-
 			if (!username) {
 				errormessagediv.innerHTML = "No username!";
 				fadein(errormessagediv);
@@ -21,7 +18,9 @@ function registerUsername() {
 				createUser.onreadystatechange = function(){
 					if(this.readyState == 4){
 						if(this.status == 200 || this.status == 409 || this.status == 422){
-							window.location.href = "check_in.html";
+							var parsedJson = JSON.parse(createUser.responseText);
+							var userId = parsedJson["user"]["id"];
+							window.location.href = "checkin.html/?id="+userId;
 							fadeout(errormessagediv);
 						}else{
 							errormessagediv.innerHTML = "Something went wrong with the server or db. Try again later.";
@@ -29,7 +28,6 @@ function registerUsername() {
 						}
 					}
 				}
-				//console.log(JSON.stringify({username:username},null,' '));
 				createUser.send(JSON.stringify({"username":username},null,' '));
 			}
 		}
