@@ -19,7 +19,12 @@ function registerUsername() {
 					if(this.readyState == 4){
 						if(this.status == 200 || this.status == 409 || this.status == 422){
 							var parsedJson = JSON.parse(createUser.responseText);
-							var userId = parsedJson["user"]["id"];
+							var userId;
+							if (this.status == 200){
+								userId = parsedJson["id"];
+							}else{
+								userId = parsedJson["user"]["id"];
+							}
 							document.cookie = "userId=" + userId
 							window.location.href = "checkin.html";
 							fadeout(errormessagediv);
