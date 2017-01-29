@@ -6,17 +6,27 @@
 	<meta charset="UTF-8">
 	<meta name="description" content="Project for ASINT">
 	<meta name="keywords"    content="ASINT">
-	<meta name="author"      content="Francisco Leal, outros tipos">
-	<link rel="stylesheet" type="text/css" href="../static/css.css">
+	<link rel="stylesheet" type="text/css" href="static/css.css">
 </head>
 
 <body>
   <div class="container admin">
     <h1> Choose a room to check in.</h1>
-    <div id="container">Available Rooms: <br></div>
+
+    <div id="container">
+        <div id="errormessage"></div>
+        <div id="successmessage"></div>
+    	<ul id="listofrooms">
+
+    	</ul>
+    	<div class="buttoncontainer">
+            <button id="reserveroombtn" type="button" class="btn-disable" onclick="checkInRoom()">Check In</button>
+        </div>
+
+    </div>
   </div>
 
-	<script language="javascript" src="../static/checkin.js"></script>
-  <script language="javascript" src="../static/common.js"></script>
+	<script language="javascript" src="static/checkin.js"></script>
+  <script language="javascript"   src="static/common.js"></script>
 </body>
 </html>
