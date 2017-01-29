@@ -37,7 +37,8 @@ function getAllRooms(){
           var search;
           for(i=0; i < parsedJson.length; i++){
             if(document.getElementById(parsedJson[i].fenix_id).checked){
-              var user_id = location.search.split("id=")[1];
+              var user_id = document.cookie.split(';')[1].split('=')[1];
+              console.log(user_id);
               if (user_id)
               {
                 userChecksIn(user_id,parsedJson[i].fenix_id);
@@ -63,7 +64,9 @@ function userChecksIn(user,room_id){
   CheckIn.onreadystatechange = function(){
     if(this.readyState == 4){
       if(this.status == 200){
-        alert("Checked In sucessfully");
+        alert("Checkin sucessfully");
+      }else{
+        alert("Couldn't checkin.")
       }
     }
   }
