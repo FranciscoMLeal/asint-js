@@ -7,35 +7,40 @@ function getAllRooms(){
     getRooms.onreadystatechange = function(){
       if(this.readyState == 4){
         if(this.status == 200){
+          var parsedJson  = JSON.parse(getRooms.responseText);
+          var listofrooms = document.getElementById("listofrooms");
 
-        var parsedJson  = JSON.parse(getRooms.responseText);
-        var listofrooms = document.getElementById("listofrooms");
+          for (var i=0; i < parsedJson.length; i++){
 
-        for (var i=0; i < parsedJson.length; i++){
+            var radiobutton = document.createElement("input");
+            var textRadio   = document.createElement("label");
+            var newline     = document.createElement("li");
 
-          var radiobutton = document.createElement("input");
-          var textRadio   = document.createElement("label");
-          var newline     = document.createElement("li");
+            radiobutton = document.createElement("input");
+            radiobutton.setAttribute("type","radio");
+            radiobutton.setAttribute("name","salas");
+            radiobutton.setAttribute("id",parsedJson[i].fenix_id);
+            radiobutton.setAttribute("class","radio");
+            radiobutton.setAttribute("value",parsedJson[i].fenix_id);
 
-          radiobutton = document.createElement("input");
-          radiobutton.setAttribute("type","radio");
-          radiobutton.setAttribute("name","salas");
-          radiobutton.setAttribute("id",parsedJson[i].fenix_id);
-          radiobutton.setAttribute("class","radio");
-          radiobutton.setAttribute("value",parsedJson[i].fenix_id);
+            textRadio.setAttribute("for",parsedJson[i].fenix_id);
+            var occupationPercentage = (parsedJson[i].fill*1.0) / (parsedJson[i].capacity*1.0) * 100;
+            occupationPercentage = Math.round(occupationPercentage * 100) / 100
+            if (occupationPercentage == 0.0 || parsedJson[i].capacity == "0"){
+              textRadio.innerHTML = parsedJson[i].location + " (100%)";
+            }else{
+              textRadio.innerHTML = parsedJson[i].location + " (" + occupationPercentage + "%)";
+            }
 
-          textRadio.setAttribute("for",parsedJson[i].fenix_id);
-          textRadio.innerHTML = parsedJson[i].location;
+            newline.appendChild(radiobutton);
+            newline.appendChild(textRadio);
 
-          newline.appendChild(radiobutton);
-          newline.appendChild(textRadio);
-
-          listofrooms.appendChild(newline);
-        }
+            listofrooms.appendChild(newline);
+          }
 
 
-        var button = document.getElementById("reserveroombtn");
-        button.className = "";
+          var button = document.getElementById("reserveroombtn");
+          button.className = "";
 
         }
       }
