@@ -51,7 +51,14 @@ function getAllRooms(){
 checkInRoom = function(){
 
     var cookieAux = document.cookie.split(';');
-    var user_id   = cookieAux[1];
+    var user_id;
+    for(var i = 0; i < cookieAux.length; i++){
+      cookieAux[i] = cookieAux[i].replace(/\s+/g, '');
+      var cookieBrokenDown = cookieAux[i].split('=');
+      if (cookieBrokenDown[0] == "userId"){
+        user_id = cookieBrokenDown[1];
+      }
+    }
     var room_id   = document.querySelector(':checked').value;
 
     var errormessagediv   = document.getElementById("errormessage");
@@ -68,6 +75,9 @@ checkInRoom = function(){
             if(this.status == 200){
                 document.body.scrollTop = document.documentElement.scrollTop = 0;
                 successmessagediv.innerHTML = "Check in Success!";
+  							document.cookie = "userId=" + user_id;
+  							document.cookie = "roomId=" + room_id;
+  							window.location.href = "checkout.html";
                 fadein(successmessagediv);
             }else{
                 document.body.scrollTop = document.documentElement.scrollTop = 0;

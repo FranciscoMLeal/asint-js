@@ -8,6 +8,7 @@ function registerUsername() {
 				fadein(errormessagediv);
 			}
 			else if(username == "admin" || username == "0"){
+				document.cookie = "userId=" + userId;
 				window.location.href = "admin.html";
 			}
 			else{
@@ -25,7 +26,7 @@ function registerUsername() {
 							}else{
 								userId = parsedJson["user"]["id"];
 							}
-							document.cookie = "userId=" + userId
+							document.cookie = "userId=" + userId;
 							window.location.href = "checkin.html";
 							fadeout(errormessagediv);
 						}else{
