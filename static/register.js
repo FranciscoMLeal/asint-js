@@ -8,7 +8,7 @@ function registerUsername() {
 				fadein(errormessagediv);
 			}
 			else if(username == "admin" || username == "0"){
-				document.cookie = "userId=" + userId;
+				document.cookie = "userId=0";
 				window.location.href = "admin.html";
 			}
 			else{
