@@ -33,12 +33,18 @@ function getAllRooms(){
         button.setAttribute("type", "button");
         button.innerHTML = "Check In";
         button.onclick = function(){
-          var i=0;
           var search;
-          for(i=0; i < parsedJson.length; i++){
+          for(var i=0; i < parsedJson.length; i++){
             if(document.getElementById(parsedJson[i].fenix_id).checked){
-              var user_id = document.cookie.split(';')[1].split('=')[1];
-              console.log(user_id);
+              var user_id;
+              var cookieAux = document.cookie.split(';');
+              for(var j = 0; j < cookieAux.length; j++){
+                valCookieAux = cookieAux[j].split('=');
+                valCookieAux[0] = valCookieAux[0].replace(/\s+/g, '');
+                if (valCookieAux[0] == "userId"){
+                  user_id = valCookieAux[1];
+                }
+              }
               if (user_id)
               {
                 userChecksIn(user_id,parsedJson[i].fenix_id);
