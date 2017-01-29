@@ -5,6 +5,7 @@ function getInitialRooms(){
     var getRooms = new XMLHttpRequest();
     var url = "https://fenix-rooms.herokuapp.com/api/spaces";
     getRooms.open("GET", url, true);
+    getRooms.setRequestHeader('Access-Control-Allow-Origin', '*');
     getRooms.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
             var parsedJson = JSON.parse(getRooms.responseText);
@@ -29,6 +30,7 @@ function addSelectLayer(selectObject){
     var getSpace = new XMLHttpRequest();
     var space_url = "https://fenix-rooms.herokuapp.com/api/id/" + selectObject.value;
     getSpace.open("GET", space_url,true);
+    getSpace.setRequestHeader('Access-Control-Allow-Origin', '*');
     var errormessagediv   = document.getElementById("errormessage");
     var successmessagediv = document.getElementById("successmessage");
     fadeout(errormessagediv);
@@ -88,6 +90,7 @@ function adminPostRoom(selectObject,space,identifier){
   var create_url = "https://fenix-rooms.herokuapp.com/api/create_room";
   createRoom.open("POST", create_url, true);
 	createRoom.setRequestHeader("Content-type", "application/json");
+  createRoom.setRequestHeader('Access-Control-Allow-Origin', '*');
   createRoom.onreadystatechange = function(){
     if(this.readyState == 4){
       if(this.status == 200){

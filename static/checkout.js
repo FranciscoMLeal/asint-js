@@ -23,6 +23,7 @@ function showAllUsersOnRoom(){
 
   getAllUsers.open("GET", getAllUsers_url, true);
   getAllUsers.setRequestHeader("Content-type", "application/json");
+  getAllUsers.setRequestHeader('Access-Control-Allow-Origin', '*');
 
   getAllUsers.onreadystatechange = function(){
       if(this.readyState == 4){
@@ -70,6 +71,7 @@ function checkoutUser(){
 
   CheckOut.open("DELETE", checkout_url, true);
   CheckOut.setRequestHeader("Content-type", "application/json");
+  CheckOut.setRequestHeader('Access-Control-Allow-Origin', '*');
 
   CheckOut.onreadystatechange = function(){
       if(this.readyState == 4){
