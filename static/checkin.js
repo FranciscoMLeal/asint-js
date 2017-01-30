@@ -3,7 +3,6 @@ function getAllRooms(){
   var getRooms = new XMLHttpRequest();
   var url = "https://fenix-rooms.herokuapp.com/api/rooms";
   getRooms.open("GET", url, true);
-  getRooms.setRequestHeader('Access-Control-Allow-Origin', '*');
 
   getRooms.onreadystatechange = function(){
     if(this.readyState == 4){
@@ -72,7 +71,6 @@ checkInRoom = function(){
 
   CheckIn.open("POST", create_url, true);
   CheckIn.setRequestHeader("Content-type", "application/json");
-  CheckIn.setRequestHeader('Access-Control-Allow-Origin', '*');
 
   CheckIn.onreadystatechange = function(){
     if(this.readyState == 4){

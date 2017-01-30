@@ -16,7 +16,6 @@ function registerUsername() {
 				var create_url = "https://fenix-rooms.herokuapp.com/api/create_user";
 				createUser.open("POST", create_url,true);
 				createUser.setRequestHeader("Content-Type", "application/json");
-				createUser.setRequestHeader('Access-Control-Allow-Origin', '*');
 				createUser.onreadystatechange = function(){
 					if(this.readyState == 4){
 						if(this.status == 200 || this.status == 409 || this.status == 422){
