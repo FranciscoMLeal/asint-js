@@ -133,6 +133,7 @@ body {
  float: left;
  margin-top: 10px;
  margin-right: 40px;
+ width: 200px;
 }
 
 #listofrooms li input[type=radio]{
