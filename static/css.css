@@ -199,3 +199,9 @@ input.radio:checked ~ label:before {
 input.radio:checked ~ label {
   color: #777;
 }
+
+
+#listOfStudents {
+  margin: 10px;
+  font-size: large;
+}

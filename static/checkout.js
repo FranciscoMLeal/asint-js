@@ -31,12 +31,12 @@ function showAllUsersOnRoom(){
             var students = document.getElementById("listOfStudents");
             var usernames = [];
             var allNames = "";
-            for (var i=0; i < parsedJson["users"].length; i++){
+            for (var i=1; i < parsedJson["users"].length; i++){
                 usernames.push(parsedJson["users"][i]);
-                allNames += parsedJson["users"][i];
+                allNames += parsedJson["users"][i] + ' ';
             }
             console.log(usernames);
-            students.innerHTML = usernames;
+            students.innerHTML = allNames;
           }else{
           }
       }
